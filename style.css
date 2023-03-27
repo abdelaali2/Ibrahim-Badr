@@ -1,6 +1,6 @@
 :root {
   --primary-color: #dc143c;
-  --border-color: #ffffff80;
+  --border-color: #00000060;
   --font-size: 20px;
   --box-shadow: 5px 5px 10px #f02c5380, -5px -5px 10px #f02c5380;
   --text-shadow: -1px 1px 2px #dc143c, 1px 1px 2px #dc143c, 1px -1px 0 #fff;
@@ -18,12 +18,12 @@
 }
 
 body {
-  background: linear-gradient(-45deg, #ffa63d, #8c27ab, #338aff, #3cf0c5);
+  background: linear-gradient(-45deg, #d0d4d5, #ffffff, #d1dae3, #ffffff);
   background-size: 600%;
-  animation: anime 30s linear infinite;
+  animation: bgAnimation 30s linear infinite;
 }
 
-@keyframes anime {
+@keyframes bgAnimation {
   0% {
     background-position: 0% 50%;
   }
@@ -36,10 +36,9 @@ body {
 }
 
 html > * {
-  color: transparent;
+  color: var(--primary-color);
   text-shadow: var(--text-shadow);
   font-family: "MainFont", serif;
-  transition: 0.3 ease-in-out;
 }
 
 li {
@@ -48,12 +47,16 @@ li {
 
 a {
   text-decoration: none;
-  color: transparent;
+  color: var(--primary-color);
   text-shadow: var(--text-shadow);
 }
 
 a:hover {
-  color: transparent;
+  color: var(--primary-color);
+}
+
+i {
+  font-style: normal;
 }
 
 nav {
@@ -87,8 +90,8 @@ nav {
   color: white;
 }
 
-.displayNone{
-  display: none !important; 
+.displayNone {
+  display: none !important;
 }
 
 #loadingContainer {
@@ -131,7 +134,8 @@ nav {
 }
 
 #profilePhoto {
-  width: 24%;
+  /* width: 24%; */
+  width: clamp(20%, 25%, 30%);
   border-radius: 100%;
   border: 10px solid transparent;
   border-radius: 100%;
@@ -143,38 +147,133 @@ nav {
 
 #textContainer {
   flex: 1;
-  text-align: center;
   align-self: center;
-  font-size: 5rem;
-}
-
-#buttonContainer {
-  flex-grow: 1;
+  font-size: 4rem;
+  cursor: default;
+  display: flex;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
-#buttonContainer > button {
-  width: 60%;
-  z-index: 2;
-  margin: 0 auto;
-  padding: 2rem;
+#cursor {
+  cursor: none;
+  display: inline-block;
+  pointer-events: none;
+  z-index: 9999;
+  margin-left: 0;
+  font-size: 1rem;
+  width: 1.5rem;
+  height: 4rem;
+}
+
+#cursor img {
+  width: 100%;
+  height: 100%;
+}
+
+#socialContainer {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  flex-grow: 4;
+}
+
+#socialContainer .wrapper a {
+  color: crimson;
+  text-shadow: none;
+}
+
+.wrapper {
+  display: inline-flex;
+  list-style: none;
+  text-shadow: none;
+}
+
+.wrapper .icon {
+  position: relative;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  margin: 2rem;
+  width: 6rem;
+  height: 6rem;
   font-size: 3rem;
-  text-transform: uppercase;
-  color: #000;
-  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   cursor: pointer;
-  transition: border-color 0.5s, background-color 0.5s, color 0.5s;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-#buttonContainer > button:hover {
-  background-color: #fff;
-  border-color: transparent;
-  color: #444;
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background: #ffffff;
+  color: #ffffff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-#myToast {
-  width: 40%;
-  font-size: 2rem;
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #ffffff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background: #1877f2;
+  color: #ffffff;
+}
+
+.wrapper .linkedin:hover,
+.wrapper .linkedin:hover .tooltip,
+.wrapper .linkedin:hover .tooltip::before {
+  background: #0077b5;
+  color: #ffffff;
+}
+
+.wrapper .hackerrank:hover,
+.wrapper .hackerrank:hover .tooltip,
+.wrapper .hackerrank:hover .tooltip::before {
+  background: #2ec866;
+  color: #ffffff;
+}
+
+.wrapper .github:hover,
+.wrapper .github:hover .tooltip,
+.wrapper .github:hover .tooltip::before {
+  background: #333333;
+  color: #ffffff;
 }
 
 .mainContainer {
@@ -186,26 +285,35 @@ nav {
 .mainContainer > div {
   padding: 5rem;
   scroll-margin-top: 11rem;
-  width: 90%;
+  width: 95%;
 }
 
 .mainContainer > div:nth-child(odd) {
   border-left: 4px solid var(--border-color);
-  border-radius: 40px 0px 0px 40px;
+  /* border-radius: 40px 0px 0px 40px; */
+  border-bottom: 2px solid var(--border-color);
+  border-top: 2px solid var(--border-color);
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
   /* box-shadow: var(--box-shadow); */
+  width: 80%;
 }
 
 .mainContainer > div:nth-child(even) {
   border-right: 4px solid var(--border-color);
-  border-radius: 0px 40px 40px 0px;
+  /* border-radius: 0px 40px 40px 0px; */
+  border-bottom: 2px solid var(--border-color);
+  border-top: 2px solid var(--border-color);
+  border-top-right-radius: 40px;
+  border-bottom-right-radius: 40px;
   /* box-shadow: var(--box-shadow); */
+  width: 80%;
 }
 
 .mainContainer > div:nth-child(1) {
   box-shadow: none;
   border-top: none;
   align-self: flex-end;
-  width: 85%;
 }
 
 h1 {
